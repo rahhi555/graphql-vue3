@@ -1,0 +1,33 @@
+<script setup lang="ts">
+import { useAllPostsQuery } from '@/generated/graphql'
+
+const { result } = useAllPostsQuery()
+</script>
+
+<template>
+  <section class="hero has-background-grey-light is-small">
+    <div class="hero-body columns">
+      <p class="title column">
+        本棚
+      </p>
+      <button class="column button is-primary is-one-fifth" style="line-height: 1px;">
+        新規追加
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div v-for="post in result?.posts" class="card">
+        <div class="card-content is-flex is-flex-direction-column is-align-items-center">
+          <h1 class="title">{{post.title}}</h1>
+          <h2 class="subtitle">{{post.author}}</h2>
+        </div>
+        <div class="card-footer">
+          <button class="button card-footer-item is-success">編集する</button>
+          <button class="button card-footer-item is-danger">削除する</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>

@@ -1,0 +1,28 @@
+query AllPosts {
+  posts {
+    id
+    title
+    author
+  }
+}
+
+mutation CreatePost($title: String!, $author: String!) {
+  postCreate(input: { title: $title, author: $author })
+  {
+    post {
+      id
+      title
+      author
+    }
+  }
+}
+
+mutation UpdatePost($id: ID!, $title: String!, $author: String!) {
+  postUpdate(input: { id: $id, title: $title, author: $author }) {
+    post {
+      id
+      title
+      author
+    }
+  }
+}
