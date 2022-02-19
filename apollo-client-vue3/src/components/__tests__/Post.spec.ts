@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, MockedObject } from 'vitest'
 import { mount } from '@vue/test-utils'
-import Post from '../Post.vue'
+import Post from '../posts/Post.vue'
 import * as generated from '../../generated/graphql'
 import { nextTick, ref } from 'vue'
 import { setupServer } from 'msw/node'

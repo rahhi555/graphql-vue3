@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PostVue from '@/components/Post.vue';
+import PostVue from '@/components/posts/Post.vue';
 </script>
 
 <template>

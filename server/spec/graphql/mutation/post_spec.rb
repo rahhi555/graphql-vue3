@@ -22,14 +22,43 @@ RSpec.describe 'Post関連のMutation', type: :request do
         }
       QUERY
 
-      expect {
+      expect do
         post graphql_path, params: { query: }
-      }.to change { Post.count }.by(1)
+      end.to change { Post.count }.by(1)
 
       post = JSON.parse(response.body)['data']['postCreate']['post']
       expect(post['id']).to eq Post.last.id.to_s
       expect(post['title']).to eq new_post.title
       expect(post['author']).to eq new_post.author
+    end
+  end
+
+  describe 'post_update Mutation' do
+    let!(:old_post) { create(:post) }
+
+    it '属性が正しい場合、既存のpostを更新できること' do
+      query = <<~QUERY
+        mutation {
+          postUpdate(input: {
+            id: "#{old_post.id}",
+            title: "new title",
+            author: "new author"
+          }) {
+            post {
+              id
+              title
+              author
+            }
+          }
+        }
+      QUERY
+
+      post graphql_path, params: { query: }
+
+      post = JSON.parse(response.body)['data']['postUpdate']['post']
+      expect(post['id']).to eq old_post.id.to_s
+      expect(post['title']).to eq 'new title'
+      expect(post['author']).to eq 'new author'
     end
   end
 end
