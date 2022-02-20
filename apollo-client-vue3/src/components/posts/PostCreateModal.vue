@@ -11,5 +11,11 @@ defineEmits<{(e: 'update:title', value: string): void, (e: 'update:content', val
       :title="title"
       @input="$emit('update:title', ($event.target as HTMLInputElement).value)"
     >
+    <input 
+      class="input" 
+      type="text" 
+      :content="content"
+      @input="$emit('update:content', ($event.target as HTMLInputElement).value)"
+    >
   </div>
 </template>

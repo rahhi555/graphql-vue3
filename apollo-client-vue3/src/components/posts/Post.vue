@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import ModalBase from '../shared/ModalBase.vue';
-import PostCreateModal from './PostCreateModal.vue';
 import { useAllPostsQuery, useCreatePostMutation, useUpdatePostMutation } from "@/generated/graphql";
+import { useResult } from "@vue/apollo-composable";
 import { reactive, ref } from "vue";
 
 const { result } = useAllPostsQuery();
+const posts = useResult(result)
 const modalFlags = reactive({
   isCreate: false,
   isUpdate: false,
 });
-const title = ref('')
 </script>
 
 <template>
@@ -22,7 +21,7 @@ const title = ref('')
 
   <section class="section">
     <div class="container">
-      <div v-for="post in result?.posts" class="card">
+      <div v-for="post in posts" class="card">
         <div class="card-content is-flex is-flex-direction-column is-align-items-center">
           <h1 class="title">{{ post.title }}</h1>
           <h2 class="subtitle">{{ post.author }}</h2>
@@ -34,8 +33,4 @@ const title = ref('')
       </div>
     </div>
   </section>
-
-  <ModalBase v-model:is-modal-visible="modalFlags.isCreate" @close="modalFlags.isCreate = false" />
-  <p>title{{title}}</p>
-  <PostCreateModal v-model:title="title" />
 </template>

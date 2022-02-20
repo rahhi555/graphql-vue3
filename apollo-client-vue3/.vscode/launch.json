@@ -8,12 +8,12 @@
           "name": "Debug Current Test File",
           "autoAttachChildProcesses": true,
           "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-          "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
-          "args": ["run", "${relativeFile}", "--", "environment", "jsdom"],
-          // "runtimeExecutable": "npm",
-          // "args": ["run", "test:unit"],
+          // "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+          // "args": ["run", "${relativeFile}", "--", "environment", "jsdom"],
+          "runtimeExecutable": "npm",
+          "args": ["run", "test:debug"],
           "smartStep": true,
-          "console": "integratedTerminal"
+          "console": "integratedTerminal",
       }
   ]
 }
