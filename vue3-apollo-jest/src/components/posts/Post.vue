@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useAllPostsQuery } from "../../generated/graphql";
+import { useAllPostsQuery, useCreatePostMutation } from "../../generated/graphql";
 import { useResult } from "@vue/apollo-composable";
 import { reactive } from "vue";
 import ModalBase from "../shared/ModalBase.vue";
 import PostInput from "./PostInput.vue";
 
-const { result } = useAllPostsQuery();
+const { result, fetchMore } = useAllPostsQuery();
 
 const posts = useResult(result);
 
@@ -18,6 +18,16 @@ const createValues = reactive({
   title: "",
   author: "",
 });
+const { mutate: createPost  } = useCreatePostMutation(() => ({
+  variables: {
+    title: createValues.title,
+    author: createValues.author
+  },
+  update: (cache, result) => {
+    console.log(cache)
+    console.log(result)
+  }
+}))
 
 const updateValues = reactive({
   title: "",
@@ -61,6 +71,11 @@ const openUpdateModal = (post: { title: string, author: string }) => {
     <template #content>
       <PostInput v-model:title="createValues.title" v-model:author="createValues.author" />
     </template>
+
+    <template #footer>
+      <button class="button is-primary card-footer-item" @click="createPost()">追加</button>
+      <button class="button card-footer-item">クリア</button>
+    </template>
   </ModalBase>
 
   <ModalBase :is-modal-visible="modalFlags.isUpdate" @close="modalFlags.isUpdate = false">
@@ -70,6 +85,11 @@ const openUpdateModal = (post: { title: string, author: string }) => {
 
     <template #content>
       <PostInput v-model:title="updateValues.title" v-model:author="updateValues.author" />
+    </template>
+
+    <template #footer>
+      <button class="button is-primary card-footer-item">更新</button>
+      <button class="button card-footer-item">クリア</button>
     </template>
   </ModalBase> 
 </template>

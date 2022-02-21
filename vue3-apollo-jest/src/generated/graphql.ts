@@ -89,12 +89,54 @@ export type Query = {
   posts?: Maybe<Array<Post>>;
 };
 
+export type CreatePostMutationVariables = Exact<{
+  title: Scalars['String'];
+  author: Scalars['String'];
+}>;
+
+
+export type CreatePostMutation = { __typename?: 'Mutation', postCreate?: { __typename?: 'PostCreatePayload', post: { __typename?: 'Post', id: string, title: string, author: string } } | null };
+
 export type AllPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllPostsQuery = { __typename?: 'Query', posts?: Array<{ __typename?: 'Post', id: string, title: string, author: string }> | null };
 
 
+export const CreatePostDocument = gql`
+    mutation createPost($title: String!, $author: String!) {
+  postCreate(input: {title: $title, author: $author}) {
+    post {
+      id
+      title
+      author
+    }
+  }
+}
+    `;
+
+/**
+ * __useCreatePostMutation__
+ *
+ * To run a mutation, you first call `useCreatePostMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreatePostMutation({
+ *   variables: {
+ *     title: // value for 'title'
+ *     author: // value for 'author'
+ *   },
+ * });
+ */
+export function useCreatePostMutation(options: VueApolloComposable.UseMutationOptions<CreatePostMutation, CreatePostMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreatePostMutation, CreatePostMutationVariables>>) {
+  return VueApolloComposable.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, options);
+}
+export type CreatePostMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreatePostMutation, CreatePostMutationVariables>;
 export const AllPostsDocument = gql`
     query allPosts {
   posts {

@@ -13,7 +13,7 @@ const closeModal = () => {
   <div class="modal" :class="{ 'is-active': isModalVisible }">
     <div class="modal-background"  @click.self="closeModal">
       <div class="modal-content card modal-position">
-        <header class="card-header">
+        <header class="card-header is-justify-content-center is-size-3">
           <slot name="header"></slot>
         </header>
         <div class="card-content">
