@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { useAllPostsQuery, useCreatePostMutation } from "../../generated/graphql";
+import { useAllPostsQuery, useCreatePostMutation, AllPostsQuery } from "../../generated/graphql";
 import { useResult } from "@vue/apollo-composable";
 import { reactive } from "vue";
 import ModalBase from "../shared/ModalBase.vue";
 import PostInput from "./PostInput.vue";
+import HelloWorld from "../HelloWorld.vue";
 
-const { result, fetchMore } = useAllPostsQuery();
+const { result, document } = useAllPostsQuery();
 
 const posts = useResult(result);
 
@@ -24,8 +25,14 @@ const { mutate: createPost  } = useCreatePostMutation(() => ({
     author: createValues.author
   },
   update: (cache, result) => {
-    console.log(cache)
-    console.log(result)
+    const cacheData = cache.readQuery<AllPostsQuery>({ query: document.value })!
+    const deepCopiedChacheData = JSON.parse(JSON.stringify(cacheData)) as AllPostsQuery
+    const { post } = result!.data!.postCreate!
+    deepCopiedChacheData.posts?.push(post)
+    cache.writeQuery<AllPostsQuery>({ query: document.value, data: deepCopiedChacheData })
+    createValues.title = ''
+    createValues.author = ''
+    modalFlags.isCreate = false
   }
 }))
 
@@ -69,12 +76,12 @@ const openUpdateModal = (post: { title: string, author: string }) => {
     </template>
 
     <template #content>
-      <PostInput v-model:title="createValues.title" v-model:author="createValues.author" />
+      <!-- <PostInput v-model:title="createValues.title" v-model:author="createValues.author" /> -->
     </template>
 
     <template #footer>
       <button class="button is-primary card-footer-item" @click="createPost()">追加</button>
-      <button class="button card-footer-item">クリア</button>
+      <button class="button card-footer-item" @click="modalFlags.isCreate = false">クリア</button>
     </template>
   </ModalBase>
 
@@ -84,12 +91,14 @@ const openUpdateModal = (post: { title: string, author: string }) => {
     </template>
 
     <template #content>
-      <PostInput v-model:title="updateValues.title" v-model:author="updateValues.author" />
+      <!-- <PostInput v-model:title="updateValues.title" v-model:author="updateValues.author" /> -->
     </template>
 
     <template #footer>
       <button class="button is-primary card-footer-item">更新</button>
-      <button class="button card-footer-item">クリア</button>
+      <button class="button card-footer-item" @click="modalFlags.isUpdate = false">クリア</button>
     </template>
   </ModalBase> 
+
+  <HelloWorld :msg="createValues.title"/>
 </template>

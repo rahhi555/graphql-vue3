@@ -7,13 +7,15 @@ defineEmits<{(e: 'update:title', value: string): void, (e: 'update:author', valu
   <div>
     <input 
       class="input mb-5" 
-      type="text" 
+      type="text"
+      placeholder="タイトル"
       :value="title"
       @input="$emit('update:title', ($event.target as HTMLInputElement).value)"
     >
     <input 
       class="input" 
       type="text" 
+      placeholder="著者"
       :value="author"
       @input="$emit('update:author', ($event.target as HTMLInputElement).value)"
     >

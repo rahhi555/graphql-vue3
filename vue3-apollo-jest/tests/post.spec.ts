@@ -17,6 +17,10 @@ describe("Post", () => {
       return { result }
     })
 
+    mockGenerated.useCreatePostMutation.mockImplementation((): any => {
+      return { mutate: () => {} }
+    })
+
     mockVueApollo.useResult.mockImplementation((): any => { 
       return result
     })
