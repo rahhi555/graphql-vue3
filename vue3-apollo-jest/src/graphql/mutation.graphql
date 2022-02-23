@@ -7,3 +7,21 @@ mutation createPost($title: String!, $author: String!) {
     }
   }
 }
+
+mutation updatePost($id: ID!, $title: String!, $author: String!) {
+  postUpdate(input: { id: $id, title: $title, author: $author }) {
+    post {
+      id
+      title
+      author
+    }
+  }
+}
+
+mutation deletePost($id: ID!) {
+  postDelete(input: { id: $id }) {
+    post {
+      id
+    }
+  }
+}

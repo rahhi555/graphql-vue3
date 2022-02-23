@@ -1,6 +1,17 @@
 <script setup lang="ts">
-defineProps<{ title: string, author: string }>()
-defineEmits<{(e: 'update:title', value: string): void, (e: 'update:author', value: string): void}>()
+import { computed } from 'vue';
+
+const props = defineProps<{ title: string, author: string }>()
+const emit = defineEmits<{(e: 'update:title', value: string): void, (e: 'update:author', value: string): void}>()
+
+const compTitle = computed({
+  get: () => props.title,
+  set: (value) => emit('update:title', value)
+})
+const compAuthor = computed({
+  get: () => props.author,
+  set: (value) => emit('update:author', value)
+})
 </script>
 
 <template>
@@ -9,15 +20,13 @@ defineEmits<{(e: 'update:title', value: string): void, (e: 'update:author', valu
       class="input mb-5" 
       type="text"
       placeholder="タイトル"
-      :value="title"
-      @input="$emit('update:title', ($event.target as HTMLInputElement).value)"
+      v-model="compTitle"
     >
     <input 
       class="input" 
       type="text" 
       placeholder="著者"
-      :value="author"
-      @input="$emit('update:author', ($event.target as HTMLInputElement).value)"
+      v-model="compAuthor"
     >
   </div>
 </template>

@@ -2,13 +2,16 @@
 import { ref } from 'vue'
 
 defineProps<{ msg: string }>()
-defineEmits<{(e: 'update:msg', value: string): void}>()
+const emit = defineEmits<{(e: 'update:msg', value: string): void}>()
 
+const udpateMsgEmit = (e: Event) => {
+  emit('update:msg', (e.target as HTMLInputElement).value)
+}
 const count = ref(0)
 </script>
 
 <template>
-  <input type="text" :value="msg" @input="$emit('update:msg', $event.target.value)">
+  <input type="text" :value="msg" @input="udpateMsgEmit">
   <h1>{{ msg }}</h1>
 
   <p>

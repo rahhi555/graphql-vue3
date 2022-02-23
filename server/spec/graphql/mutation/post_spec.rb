@@ -61,4 +61,28 @@ RSpec.describe 'Post関連のMutation', type: :request do
       expect(post['author']).to eq 'new author'
     end
   end
+
+  describe 'post delete mutation' do
+    let!(:old_post) { create(:post) }
+
+    it '属性値が正しい場合、投稿を削除できること' do
+      query = <<~QUERY
+        mutation {
+          postDelete(input: { id: "#{old_post.id}" }) {
+            post {
+              id
+            }
+          }
+        }
+      QUERY
+
+      expect do
+        post graphql_path, params: { query: }
+      end.to change { Post.count }.from(1).to(0)
+
+      # @type [String] return_id
+      return_id = JSON.parse(response.body)['data']['postDelete']['post']['id']
+      expect(return_id.to_i).to eq old_post.id
+    end
+  end
 end
