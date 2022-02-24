@@ -80,7 +80,6 @@ RSpec.describe 'Post関連のMutation', type: :request do
         post graphql_path, params: { query: }
       end.to change { Post.count }.from(1).to(0)
 
-      # @type [String] return_id
       return_id = JSON.parse(response.body)['data']['postDelete']['post']['id']
       expect(return_id.to_i).to eq old_post.id
     end
