@@ -1,0 +1,14 @@
+class GraphqlChannel < ApplicationCable::Channel
+  @subscription_ids: Array[String]
+
+  def subscribed: () -> void
+
+  def execute: (Hash[untyped, untyped] data) -> void
+
+  def unsubscribed: () -> void
+
+  private
+  def ensure_hash: (String | Hash[untyped, untyped] | ActionController::Parameters | nil | untyped ambiguous_param) -> Hash[untyped,untyped] |
+                                                                                                                    -> ArgumentError |
+                                                                                                                    -> ActionController::Parameters
+end

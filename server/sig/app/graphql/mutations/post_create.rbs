@@ -1,0 +1,5 @@
+module Mutations
+  class PostCreate < BaseMutation
+    def resolve: (title: String title, author: String author) -> Hash[Symbol, Post]
+  end
+end

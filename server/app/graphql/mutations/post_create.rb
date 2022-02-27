@@ -13,6 +13,7 @@ module Mutations
       post = ::Post.new(title:, author:)
       raise GraphQL::ExecutionError.new "Error creating post", extensions: post.errors.to_hash unless post.save
 
+      ServerSchema.subscriptions.trigger('postWasPublished', {}, post)
       { post: }
     end
   end
