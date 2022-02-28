@@ -1,0 +1,9 @@
+subscription postWasPublished {
+  postWasPublished {
+    post {
+      id
+      title
+      author
+    }
+  }
+}

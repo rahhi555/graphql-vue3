@@ -5,12 +5,15 @@ import {
   AllPostsQuery,
   useUpdatePostMutation,
   UpdatePostMutationVariables,
-  useDeletePostMutation
+  useDeletePostMutation,
+  usePostWasPublishedSubscription
 } from "../../generated/graphql";
-import { useResult } from "@vue/apollo-composable";
-import { reactive } from "vue";
+import { useResult, useApolloClient } from "@vue/apollo-composable";
+import { reactive, watch } from "vue";
 import ModalBase from "../shared/ModalBase.vue";
 import PostInput from "./PostInput.vue";
+
+const { client } = useApolloClient()
 
 const { result, document } = useAllPostsQuery();
 
@@ -82,6 +85,17 @@ const closeUpdateModal = () => {
   updateValues.author = "";
   modalFlags.isUpdate = false;
 };
+
+const { result: subscriptionResult } = usePostWasPublishedSubscription()
+
+watch(subscriptionResult, data => {
+  if (!data?.postWasPublished) return
+
+  const cache = client.readQuery({ query: document.value })
+  const deepCopiedCache = JSON.parse(JSON.stringify(cache)) as AllPostsQuery
+  deepCopiedCache.posts?.push(data!.postWasPublished.post)
+  client.writeQuery<AllPostsQuery>({ query: document.value, data: deepCopiedCache })
+})
 </script>
 
 
@@ -112,6 +126,7 @@ const closeUpdateModal = () => {
             @click="openUpdateModal(post)"
           >編集する</button>
           <button
+             id="delete-post-btn"
             class="button card-footer-item is-danger"
             @click="deletePost({ id: post.id })"
           >削除する</button>

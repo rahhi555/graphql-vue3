@@ -25,8 +25,20 @@ beforeEach(() => {
     return { mutate: () => {} }
   })
 
+  mockGenerated.useDeletePostMutation.mockImplementation((): any => {
+    return { mutate: () => {} }
+  })
+
+  mockGenerated.usePostWasPublishedSubscription.mockImplementation((): any => {
+    return { result: ref(null) }
+  })
+
   mockVueApollo.useResult.mockImplementation((): any => { 
     return result
+  })
+
+  mockVueApollo.useApolloClient.mockImplementation((): any => {
+    return { client: null }
   })
 })
 
@@ -84,5 +96,23 @@ describe("Post", () => {
     expect(wrapper.text()).not.toContain("芥川龍之介");
     expect(wrapper.text()).toContain("金閣寺");
     expect(wrapper.text()).toContain("三島由紀夫");
+  })
+
+  it('削除をすると投稿が一覧から取り除かれること', async () => {
+    const deletePost = jest.fn().mockImplementation(() => {
+      (wrapper.vm as any).posts.pop()
+    })
+
+    const wrapper = mount(Post, {
+      global: {
+        mocks: {
+          deletePost
+        }
+      }
+    })
+
+    await wrapper.find('#delete-post-btn').trigger('click')
+    expect(wrapper.text()).not.toContain("羅生門");
+    expect(wrapper.text()).not.toContain("芥川龍之介");
   })
 });
