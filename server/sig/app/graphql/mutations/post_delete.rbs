@@ -1,0 +1,5 @@
+module Mutations
+  class PostDelete < BaseMutation
+    def resolve: (id: Integer id) -> { post: Post }
+  end
+end

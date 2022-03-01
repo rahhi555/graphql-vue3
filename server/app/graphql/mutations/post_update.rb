@@ -16,6 +16,7 @@ module Mutations
         title:, author:
       )
 
+      ServerSchema.subscriptions.trigger('postWasPublished', {}, post.attributes.merge(mutation: 'UPDATED'))
       { post: }
     end
   end

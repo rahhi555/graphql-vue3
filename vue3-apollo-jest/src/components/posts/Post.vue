@@ -34,11 +34,11 @@ const { mutate: createPost } = useCreatePostMutation(() => ({
     author: createValues.author,
   },
   update: (cache, result) => {
-    const cacheData = cache.readQuery<AllPostsQuery>({ query: document.value })!;
-    const deepCopiedChacheData = JSON.parse(JSON.stringify(cacheData)) as AllPostsQuery;
-    const { post } = result!.data!.postCreate!;
-    deepCopiedChacheData.posts?.push(post);
-    cache.writeQuery<AllPostsQuery>({ query: document.value, data: deepCopiedChacheData });
+    // const cacheData = cache.readQuery<AllPostsQuery>({ query: document.value })!;
+    // const deepCopiedChacheData = JSON.parse(JSON.stringify(cacheData)) as AllPostsQuery;
+    // const { post } = result!.data!.postCreate!;
+    // deepCopiedChacheData.posts?.push(post);
+    // cache.writeQuery<AllPostsQuery>({ query: document.value, data: deepCopiedChacheData });
     createValues.title = "";
     createValues.author = "";
     modalFlags.isCreate = false;
@@ -63,12 +63,12 @@ const { mutate: updatePost } = useUpdatePostMutation(() => ({
 
 const { mutate: deletePost } = useDeletePostMutation({
   update: (cache, result) => {
-    const cacheData = cache.readQuery<AllPostsQuery>({ query: document.value })!
-    const deepCopiedChacheData = JSON.parse(JSON.stringify(cacheData)) as AllPostsQuery
-    const { id } = result!.data!.postDelete!.post
-    const targetIndex = deepCopiedChacheData.posts!.findIndex(post => post.id === id)
-    deepCopiedChacheData.posts!.splice(targetIndex, 1)
-    cache.writeQuery<AllPostsQuery>({ query: document.value, data: deepCopiedChacheData })
+    // const cacheData = cache.readQuery<AllPostsQuery>({ query: document.value })!
+    // const deepCopiedChacheData = JSON.parse(JSON.stringify(cacheData)) as AllPostsQuery
+    // const { id } = result!.data!.postDelete!.post
+    // const targetIndex = deepCopiedChacheData.posts!.findIndex(post => post.id === id)
+    // deepCopiedChacheData.posts!.splice(targetIndex, 1)
+    // cache.writeQuery<AllPostsQuery>({ query: document.value, data: deepCopiedChacheData })
   }
 })
 
@@ -93,7 +93,24 @@ watch(subscriptionResult, data => {
 
   const cache = client.readQuery({ query: document.value })
   const deepCopiedCache = JSON.parse(JSON.stringify(cache)) as AllPostsQuery
-  deepCopiedCache.posts?.push(data!.postWasPublished.post)
+  const { posts } = deepCopiedCache
+
+  const { mutation, post } = data.postWasPublished
+
+  switch (mutation) {
+    case 'CREATED':
+      posts?.push(post)
+      break
+    case 'UPDATED':
+      const udpateIndex = posts?.findIndex(oldPost => oldPost.id === post.id)!
+      posts?.splice(udpateIndex, 1, post)
+      break
+    case 'DELETED':
+      const deleteIndex = posts?.findIndex(oldPost => oldPost.id === post.id)!
+      posts?.splice(deleteIndex, 1)
+      break
+  }
+
   client.writeQuery<AllPostsQuery>({ query: document.value, data: deepCopiedCache })
 })
 </script>

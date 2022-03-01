@@ -1,0 +1,5 @@
+module Subscriptions
+  class PostWasPublished < Subscriptions::BaseSubscription
+    def update: () -> { post: Post, mutation: 'CREATED' | 'UPDATED' | 'DELETED' }
+  end
+end

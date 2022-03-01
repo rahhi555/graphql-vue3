@@ -13,7 +13,7 @@ module Mutations
       post = ::Post.new(title:, author:)
       raise GraphQL::ExecutionError.new "Error creating post", extensions: post.errors.to_hash unless post.save
 
-      ServerSchema.subscriptions.trigger('postWasPublished', {}, post)
+      ServerSchema.subscriptions.trigger('postWasPublished', {}, post.attributes.merge(mutation: 'CREATED'))
       { post: }
     end
   end
