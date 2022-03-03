@@ -110,7 +110,6 @@ watch(subscriptionResult, data => {
       posts?.splice(deleteIndex, 1)
       break
   }
-
   client.writeQuery<AllPostsQuery>({ query: document.value, data: deepCopiedCache })
 })
 </script>
