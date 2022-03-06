@@ -8,8 +8,9 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :posts, [PostType], description: '投稿を全て取得する'
-    def posts
-      Post.all
-    end
+    def posts = Post.all
+
+    field :users, [UserType], description: 'ユーザーを全て取得する'
+    def users = User.all
   end
 end
