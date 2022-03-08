@@ -26,7 +26,7 @@ RSpec.describe 'Post関連のMutation', type: :request do
         post graphql_path, params: { query: }
       end.to change { Post.count }.by(1)
 
-      post = JSON.parse(response.body)['data']['postCreate']['post']
+      post = response.parsed_body['data']['postCreate']['post']
       expect(post['id']).to eq Post.last.id.to_s
       expect(post['title']).to eq new_post.title
       expect(post['author']).to eq new_post.author
@@ -80,7 +80,7 @@ RSpec.describe 'Post関連のMutation', type: :request do
         post graphql_path, params: { query: }
       end.to change { Post.count }.by(-1)
 
-      return_id = JSON.parse(response.body)['data']['postDelete']['post']['id']
+      return_id = response.parsed_body['data']['postDelete']['post']['id']
       expect(return_id.to_i).to eq old_post.id
     end
   end

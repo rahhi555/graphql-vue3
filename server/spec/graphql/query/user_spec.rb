@@ -19,7 +19,7 @@ RSpec.describe 'User関連のQuery', type: :request do
       QUERY
 
       post graphql_path, params: { query: }
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['errors']).to be_nil
       expect(json['data']['users'].length).to eq users.length
     end
@@ -34,7 +34,7 @@ RSpec.describe 'User関連のQuery', type: :request do
       QUERY
 
       post graphql_path, params: { query: }
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['errors'][0]['message']).to eq "Field 'hoge' doesn't exist on type 'User'"
     end
   end
