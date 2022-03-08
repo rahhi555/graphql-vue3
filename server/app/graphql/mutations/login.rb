@@ -1,14 +1,20 @@
 module Mutations
   class Login < BaseMutation
-    # TODO: define return fields
-    # field :post, Types::PostType, null: false
+    field :user, Types::UserType, null: false
+    field :token, String, null: false
 
-    # TODO: define arguments
-    # argument :name, String, required: true
+    argument :email, String, required: true
+    argument :password, String, required: true
 
-    # TODO: define resolve method
-    # def resolve(name:)
-    #   { post: ... }
-    # end
+    def resolve(email:, password:)
+      user = ::User.find_by(email:)
+      raise GraphQL::ExecutionError, 'ユーザーが見つかりませんでした' unless user
+
+      is_password_match = BCrypt::Password.new(user.password) == password
+      raise GraphQL::ExecutionError, 'パスワードが一致しませんでした' unless is_password_match
+
+      token = JWT.encode user.id, 'supersecret'
+      { user:, token: }
+    end
   end
 end

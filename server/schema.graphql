@@ -31,6 +31,8 @@ input LoginInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+  email: String!
+  password: String!
 }
 
 """
@@ -41,6 +43,8 @@ type LoginPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+  token: String!
+  user: User!
 }
 
 type Mutation {

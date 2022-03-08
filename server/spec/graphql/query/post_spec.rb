@@ -18,6 +18,7 @@ RSpec.describe 'Post関連のQuery', type: :request do
       QUERY
 
       post graphql_path, params: { query: }
+
       json = JSON.parse(response.body)
       expect(json['errors']).to be_nil
       expect(json['data']['posts'].length).to eq posts.length
