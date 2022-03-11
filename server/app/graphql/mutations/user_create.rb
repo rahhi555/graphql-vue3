@@ -16,7 +16,7 @@ module Mutations
       user = ::User.new(name:, email:, password: hashed_password)
       raise GraphQL::ExecutionError.new 'ユーザーの新規作成でエラーが発生しました。', extensions: user.errors.to_hash unless user.save
 
-      token = JWT.encode user.id, 'supersecret'
+      token = user.create_jwt_token
       { user:, token: }
     end
   end

@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'Post関連のMutation', type: :request do
   describe 'post_create Mutation' do
+    let!(:user) { create(:user) }
     let(:new_post) { build(:post) }
-
-    it '属性が正しい場合、新たにpostを作成できること' do
-      query = <<~QUERY
+    let(:query) do
+      <<~QUERY
         mutation {
           postCreate(input: {
             title: "#{new_post.title}",
@@ -21,15 +21,24 @@ RSpec.describe 'Post関連のMutation', type: :request do
           }
         }
       QUERY
+    end
 
+    it 'ヘッダーにトークンが存在する場合、新たにpostを作成できること' do
+      token = user.create_jwt_token
       expect do
-        post graphql_path, params: { query: }
+        post graphql_path, params: { query: }, headers: { Authorization: "Bearer #{token}" }
       end.to change { Post.count }.by(1)
 
       post = response.parsed_body['data']['postCreate']['post']
       expect(post['id']).to eq Post.last.id.to_s
       expect(post['title']).to eq new_post.title
       expect(post['author']).to eq new_post.author
+    end
+
+    it 'ヘッダーにトークンが存在しない場合、postを作成できないこと' do
+      expect { post graphql_path, params: { query: } }.to_not change(Post, :count)
+
+      expect(response.parsed_body['errors'][0]['message']).to eq 'ログインしていません'
     end
   end
 

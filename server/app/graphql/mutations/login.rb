@@ -13,7 +13,7 @@ module Mutations
       is_password_match = BCrypt::Password.new(user.password) == password
       raise GraphQL::ExecutionError, 'パスワードが一致しませんでした' unless is_password_match
 
-      token = JWT.encode user.id, 'supersecret'
+      token = user.create_jwt_token
       { user:, token: }
     end
   end

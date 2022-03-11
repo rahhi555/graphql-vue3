@@ -103,6 +103,11 @@ class User < ApplicationRecord
   def restore_updated_at!: () -> void
   def clear_updated_at_change: () -> void
 
+  def posts: () -> Post::ActiveRecord_Associations_CollectionProxy
+  def posts=: (Post::ActiveRecord_Associations_CollectionProxy | Array[Post]) -> (Post::ActiveRecord_Associations_CollectionProxy | Array[Post])
+  def post_ids: () -> Array[Integer]
+  def post_ids=: (Array[Integer]) -> Array[Integer]
+
   module GeneratedRelationMethods
   end
 

@@ -121,6 +121,11 @@ type Post {
   更新日
   """
   updatedAt: ISO8601DateTime!
+
+  """
+  Userの外部キー
+  """
+  userId: Int!
 }
 
 """

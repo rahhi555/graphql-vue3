@@ -1,0 +1,5 @@
+class User < ApplicationRecord
+  VALID_EMAIL_REGEX: ::Regexp
+
+  def create_jwt_token: () -> String
+end
