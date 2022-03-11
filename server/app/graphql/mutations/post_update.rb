@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Mutations
-  class PostUpdate < BaseMutation
+  class PostUpdate < LoginRequireMutation
     description '投稿を更新する'
 
     field :post, Types::PostType, null: false
@@ -11,7 +11,7 @@ module Mutations
     argument :author, String, required: true
 
     def resolve(id:, title:, author:)
-      post = ::Post.find(id)
+      post = context[:current_user].posts.find(id)
       raise GraphQL::ExecutionError.new 'Error updating post', extensions: post.errors.to_hash unless post.update(
         title:, author:
       )

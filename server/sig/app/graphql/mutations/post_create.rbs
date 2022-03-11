@@ -1,6 +1,5 @@
 module Mutations
   class PostCreate < BaseMutation
-    def authorized?: () -> true
     def resolve: (title: String title, author: String author) -> Hash[Symbol, Post]
   end
 end

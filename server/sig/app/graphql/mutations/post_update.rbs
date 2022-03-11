@@ -1,0 +1,5 @@
+module Mutations
+  class PostUpdate < LoginRequireMutation
+    def resolve: (id: Integer id, title: String title, author: String author) -> { post: Post }
+  end
+end
