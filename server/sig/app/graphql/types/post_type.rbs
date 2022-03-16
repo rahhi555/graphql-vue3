@@ -1,0 +1,5 @@
+module Types
+  class PostType < Types::BaseObject
+    def user: () -> User
+  end
+end

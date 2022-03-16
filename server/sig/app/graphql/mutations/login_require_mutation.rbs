@@ -1,6 +1,6 @@
 module Mutations
   class LoginRequireMutation < BaseMutation
     # 使用しなくても1つの仮引数が必要(中にはクエリ実行時の実引数が格納される)
-    def authorized?: (untyped _) -> true
+    def authorized?: (Hash[Symbol, untyped] _) -> true
   end
 end

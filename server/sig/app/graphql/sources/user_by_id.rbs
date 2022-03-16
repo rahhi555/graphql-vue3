@@ -1,0 +1,7 @@
+module Sources
+  class UserById < GraphQL::Dataloader::Source
+    @model_class: User
+    def initialize: () -> void
+    def fetch: (Array[Integer] ids) -> Array[User]
+  end
+end
