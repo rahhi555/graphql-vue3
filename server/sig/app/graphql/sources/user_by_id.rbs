@@ -1,7 +1,7 @@
 module Sources
   class UserById < GraphQL::Dataloader::Source
-    @model_class: User
+    @model_class: singleton(User)
     def initialize: () -> void
-    def fetch: (Array[Integer] ids) -> Array[User]
+    def fetch: (Array[Integer] ids) -> Array[User?]
   end
 end

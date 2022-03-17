@@ -1,0 +1,7 @@
+module Sources
+  class PostsByUserId < GraphQL::Dataloader::Source
+    @model_class: singleton(::Post)
+    def initialize: () -> void
+    def fetch: (Array[Integer] ids) -> Array[::Post?]
+  end
+end

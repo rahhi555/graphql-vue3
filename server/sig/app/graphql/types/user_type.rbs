@@ -1,0 +1,6 @@
+module Types
+  class UserType < Types::BaseObject
+    def object: () -> User
+    def posts: () -> Array[Post]
+  end
+end

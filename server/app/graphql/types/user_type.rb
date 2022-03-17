@@ -7,6 +7,9 @@ module Types
     field :email, String
     field :password, String, null: false
     field :posts, [PostType]
+    def posts
+      dataloader.with(::Sources::PostsByUserId).load(object.id)
+    end
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end
