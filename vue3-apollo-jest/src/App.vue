@@ -1,10 +1,10 @@
-<script setup lang="ts">
-import Post from './components/posts/Post.vue';
-</script>
-
 <template>
-  <Post />
+  <RouterView />
 </template>
+
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+</script>
 
 <style>
 @import url("../node_modules/bulma/css/bulma.css");
