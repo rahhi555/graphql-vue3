@@ -17,6 +17,7 @@
     "graphql": "^15.0.0",
     "graphql-ruby-client": "^1.10.6",
     "graphql-tag": "^2.12.6",
+    "pinia": "^2.0.12",
     "vue": "^3.2.25",
     "vue-router": "^4.0.14"
   },
