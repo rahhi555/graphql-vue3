@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="container">
     <PostVue v-if="hasCurrentUser" />
     <LoginVue v-else />
   </main>
