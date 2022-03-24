@@ -170,7 +170,7 @@ export type Subscription = {
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['ISO8601DateTime'];
-  email?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
   id: Scalars['ID'];
   name: Scalars['String'];
   password: Scalars['String'];
@@ -226,7 +226,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginPayload', token: string, user: { __typename?: 'User', id: string, email?: string | null, name: string } } | null };
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginPayload', token: string, user: { __typename?: 'User', id: string, email: string, name: string } } | null };
 
 export type AllPostsQueryVariables = Exact<{ [key: string]: never; }>;
 

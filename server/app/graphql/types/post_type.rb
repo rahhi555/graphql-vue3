@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class PostType < Types::BaseObject
+  class PostType < BaseObject
     field :id, ID, null: false, description: 'ID'
     field :title, String, null: false, description: 'タイトル'
     field :author, String, null: false, description: '著者'

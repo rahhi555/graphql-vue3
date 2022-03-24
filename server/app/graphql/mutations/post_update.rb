@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Mutations
-  class PostUpdate < LoginRequireMutation
+  class PostUpdate < LoginRequireBaseMutation
     description '投稿を更新する'
 
     field :post, Types::PostType, null: false

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Types
-  class UserType < Types::BaseObject
+  class UserType < BaseObject
     field :id, ID, null: false
     field :name, String, null: false
-    field :email, String
+    field :email, String, null: false
     field :password, String, null: false
     field :posts, [PostType]
     def posts

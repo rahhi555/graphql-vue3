@@ -8,9 +8,21 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :posts, [PostType], description: '投稿を全て取得する'
-    def posts = Post.all
+    def posts
+      require_authorized
+      Post.all
+    end
 
     field :users, [UserType], description: 'ユーザーを全て取得する'
-    def users = User.all
+    def users
+      require_authorized
+      User.all
+    end
+
+    private
+
+    def require_authorized
+      raise GraphQL::ExecutionError, 'ログインしていません' unless context[:current_user].present?
+    end
   end
 end

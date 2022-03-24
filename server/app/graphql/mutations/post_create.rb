@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Mutations
-  class PostCreate < LoginRequireMutation
+  class PostCreate < LoginRequireBaseMutation
     description '投稿を新規作成'
 
     field :post, Types::PostType, null: false

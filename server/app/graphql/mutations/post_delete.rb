@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Mutations
-  class PostDelete < LoginRequireMutation
+  class PostDelete < LoginRequireBaseMutation
     description '渡されたidの投稿を削除する'
 
     field :post, Types::PostType, null: false

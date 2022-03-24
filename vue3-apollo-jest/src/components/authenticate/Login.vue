@@ -21,14 +21,15 @@
     </div>
   </div>
 
-  <div class="notification is-danger">
-    {{error}}
+  <div v-if="error" class="notification is-danger">
+    {{error.message}}
   </div>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useLoginMutation } from '../../generated/graphql'
+import { useUserStore } from '../../stores/user'
 
 const loginValues = reactive({ email: '', password: '' })
 const { mutate: loginMutation, error } = useLoginMutation(() => ({
@@ -36,8 +37,8 @@ const { mutate: loginMutation, error } = useLoginMutation(() => ({
     email: loginValues.email,
     password: loginValues.password
   },
-  update: (_, result) => {
-    console.log(result.data?.login)
+  update: (_, { data }) => {
+    useUserStore().setUser(data!)
   } 
 }))
 </script>

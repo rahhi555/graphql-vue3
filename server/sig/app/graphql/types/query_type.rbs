@@ -8,5 +8,7 @@ module Types
     def posts: () -> ActiveRecord::Relation
 
     def users: () -> ActiveRecord::Relation
+
+    private def require_authorized: () -> void
   end
 end

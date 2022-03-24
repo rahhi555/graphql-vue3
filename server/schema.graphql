@@ -125,7 +125,7 @@ type Post {
   """
   Userの外部キー
   """
-  userId: Int!
+  user: User!
 }
 
 """
@@ -225,10 +225,11 @@ type Subscription {
 
 type User {
   createdAt: ISO8601DateTime!
-  email: String
+  email: String!
   id: ID!
   name: String!
   password: String!
+  posts: [Post!]
   updatedAt: ISO8601DateTime!
 }
 
