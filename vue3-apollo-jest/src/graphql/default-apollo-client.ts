@@ -8,7 +8,10 @@ const cable = createConsumer('http://localhost:3000/cable')
 const actionCableLink = new ActionCableLink({ cable })
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3000/graphql'
+  uri: 'http://localhost:3000/graphql',
+  headers: {
+    authorization: 'Bearer' + localStorage.getItem('token')
+  }
 })
 
 const splitLink = split(({ query }) => {
@@ -26,5 +29,5 @@ const cache = new InMemoryCache()
 
 export const apolloClient = new ApolloClient({
   link: splitLink,
-  cache,
+  cache
 })

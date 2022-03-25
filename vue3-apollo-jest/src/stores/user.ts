@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { User, LoginMutation } from '../generated/graphql'
-import { useApolloClient } from '@vue/apollo-composable'
 
 type OptionalUser = {[K in keyof User]?: User[K]}
 
@@ -23,6 +22,7 @@ export const useUserStore = defineStore("user", {
 
   actions: {
     setUser(data: LoginMutation) {
+      localStorage.setItem('token', data.login!.token)
       const { id, name, email } = data.login!.user
       this.user = { id, name, email }
     }
