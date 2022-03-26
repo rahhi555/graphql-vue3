@@ -9,6 +9,8 @@ module Types
 
     def users: () -> ActiveRecord::Relation
 
+    def current_user: () -> User
+
     private def require_authorized: () -> void
   end
 end

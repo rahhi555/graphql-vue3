@@ -38,7 +38,7 @@ const { mutate: loginMutation, error } = useLoginMutation(() => ({
     password: loginValues.password
   },
   update: (_, { data }) => {
-    useUserStore().setUser(data!)
+    useUserStore().login(data!)
   } 
 }))
 </script>

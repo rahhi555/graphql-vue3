@@ -5,3 +5,11 @@ query allPosts {
     author
   }
 }
+
+query currentUser {
+  currentUser {
+    id
+    name
+    email
+  }
+}

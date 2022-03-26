@@ -9,7 +9,7 @@ const cable = createConsumer('http://localhost:3000/cable')
 const actionCableLink = new ActionCableLink({ cable })
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   const bearer = token ? `Bearer ${token}` : ''
   return {
     headers: {

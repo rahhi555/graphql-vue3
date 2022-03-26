@@ -21,9 +21,13 @@ export const useUserStore = defineStore("user", {
   },
 
   actions: {
-    async setUser(data: LoginMutation) {
-      localStorage.setItem('token', data.login!.token)
-      const { id, name, email } = data.login!.user
+    login(data: LoginMutation) {
+      sessionStorage.setItem('token', data.login!.token)
+      this.setUser(data.login!.user)
+    },
+
+    setUser(user: OptionalUser) {
+      const { id, name, email } = user
       this.user = { id, name, email }
     }
   }

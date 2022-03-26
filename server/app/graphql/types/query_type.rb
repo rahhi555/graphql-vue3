@@ -19,6 +19,12 @@ module Types
       User.all
     end
 
+    field :current_user, UserType, description: 'ログイン中のユーザーを取得する'
+    def current_user
+      require_authorized
+      context[:current_user]
+    end
+
     private
 
     def require_authorized
