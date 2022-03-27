@@ -1,4 +1,4 @@
-import { mount, shallowMount, VueWrapper } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import Post from "@/components/posts/Post.vue";
 import * as vueApollo from "@vue/apollo-composable"
 import * as generated from "@/generated/graphql";
