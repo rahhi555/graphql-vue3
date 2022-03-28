@@ -1,4 +1,5 @@
 <template>
+  <div>
     <h1 class="mt-4 is-size-3 has-text-centered">ログイン</h1>
 
     <div class="field">
@@ -15,14 +16,15 @@
       </div>
     </div>
 
-  <div class="field has-text-centered">
-    <div class="control">
-      <button class="button is-link" @click="loginMutation()">ログイン</button>
+    <div class="field has-text-centered">
+      <div class="control">
+        <button id="login-btn" class="button is-link" @click="loginMutation()">ログイン</button>
+      </div>
     </div>
-  </div>
 
-  <div v-if="error" class="notification is-danger">
-    {{error.message}}
+    <div v-if="error" class="notification is-danger">
+      {{error.message}}
+    </div>
   </div>
 </template>
 
