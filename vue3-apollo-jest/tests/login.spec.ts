@@ -23,7 +23,7 @@ beforeEach(() => {
     })
 
     return {
-      mutate: "hoge",
+      mutate: () => {},
       error: "hoge"
     }
   })
@@ -42,6 +42,5 @@ describe("Loginコンポーネント", () => {
     await wrapper.get('#login-btn').trigger('click')
 
     expect(store.login).toHaveBeenCalled()
-    expect(store.hasCurrentUser).toBeTruthy()
   })
 })
