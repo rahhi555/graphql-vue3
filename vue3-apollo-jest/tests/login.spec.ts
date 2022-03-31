@@ -8,7 +8,7 @@ jest.mock("@/generated/graphql")
 const mockGenerated = generated as jest.Mocked<typeof generated>
 
 beforeEach(() => {
-  mockGenerated.useLoginMutation((): any => {
+  mockGenerated.useLoginMutation.mockImplementation((): any => {
     useUserStore().login({
       __typename: "Mutation",
       login: {
@@ -41,6 +41,7 @@ describe("Loginコンポーネント", () => {
 
     await wrapper.get('#login-btn').trigger('click')
 
+    expect(store.login).toHaveBeenCalled()
     expect(store.hasCurrentUser).toBeTruthy()
   })
 })
